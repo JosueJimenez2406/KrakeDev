@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Promedio de Notas</title>
+    <style>
+        /* Estilo para ocultar inicialmente la imagen de resultado */
+        #gifResultado { display: none; width: 150px; height: auto; margin-left: 10px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <h1>Calcular Promedio</h1>
+
+    <label>Nota 1: <input id="n1" type="text" /></label><br/>
+    <label>Nota 2: <input id="n2" type="text" /></label><br/>
+    <label>Nota 3: <input id="n3" type="text" /></label><br/>
+
+    <button id="btnCalcular" onclick="calcularPromedioNotas()">Calcular Promedio</button>
+
+    <p>Resultado: <span id="resultado"></span></p>
+    <img id="gifResultado" alt="resultado"/>
+
+    <script type="module" src="promedioNotas.js"></script>
+</body>
+</html>
