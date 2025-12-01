@@ -1,45 +1,79 @@
-import { calcularPromedio } from './serviciosPromedioNotas.js';
+recuperarTexto = function(idComponente) {
+    let cmpTexto = document.getElementById(idComponente);
+    if (!cmpTexto) return '';
+    if ('value' in cmpTexto) return cmpTexto.value;
+    return cmpTexto.innerText || '';
+}
 
+recuperarEntero = function(idComponente) {
+    let valor = recuperarTexto(idComponente);
+    return parseInt(valor);
+}
+
+recuperarFlotante = function(idComponente) {
+    let valor = recuperarTexto(idComponente);
+    return parseFloat(valor);
+}
+
+cambiarTexto = function(idComponente, mensaje) {
+    let componente = document.getElementById(idComponente);
+    if (!componente) return;
+    if ('value' in componente) {
+        componente.value = mensaje;
+    } else {
+        componente.innerText = mensaje;
+    }
+}
+
+cambiarImagen = function(idComponente, imagen) {
+    let componente = document.getElementById(idComponente);
+    if (!componente) return;
+    componente.src = imagen;
+    // Hace visible la imagen si estaba oculta
+    componente.style.display = 'block'; 
+}
 function calcularPromedioNotas() {
-
-    const el1 = document.getElementById('n1');
-    const el2 = document.getElementById('n2');
-    const el3 = document.getElementById('n3');
-    const resultadoEl = document.getElementById('resultado');
-    const img = document.getElementById('gifResultado');
-
-
-    if (!el1 || !el2 || !el3 || !resultadoEl || !img) return;
-
-    const n1 = parseFloat(el1.value);
-    const n2 = parseFloat(el2.value);
-    const n3 = parseFloat(el3.value);
-
-    if (Number.isNaN(n1) || Number.isNaN(n2) || Number.isNaN(n3)) {
-        resultadoEl.textContent = 'Ingrese números válidos.';
-        img.style.display = 'none';
-        img.src = '';
-        return;
+    // a. Recupera los valores de cada caja de texto COMO FLOAT (Usando utilitarias)
+    const nota1 = recuperarFlotante('nota1');
+    const nota2 = recuperarFlotante('nota2');
+    const nota3 = recuperarFlotante('nota3');
+    
+    // Validación de números
+    if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3)) {
+        cambiarTexto('resultadoPromedio', 'ERROR: Ingrese valores numéricos.');
+        cambiarImagen('resultadoImagen', ''); // Limpia la imagen
+        return; 
     }
 
-    const promedio = calcularPromedio(n1, n2, n3);
+    // b. Invoca a la función calcularPromedio (de serviciosPromedioNotas.js)
+    const promedio = calcularPromedio(nota1, nota2, nota3);
 
-    resultadoEl.textContent = promedio.toFixed(2);
-
-    img.src = promedio > 7 ? 'imagenes/exito.gif' : 'imagenes/fracaso.gif';
+    // c. Muestra en pantalla el valor del promedio, con 2 decimales (Usando utilitarias)
+    const promedioFormateado = promedio.toFixed(2);
+    cambiarTexto('resultadoPromedio', promedioFormateado);
     
-    img.style.display = 'inline-block';
+    // Lógica para mostrar el GIF (Punto 6)
+    let gifURL;
+    
+    // Si el promedio es mayor a 7 mostrar un gif de éxito
+    if (promedio > 7) {
+        // Remplaza con la ruta a tu GIF de éxito
+        gifURL = 'imagenes/exito.gif'; 
+    } 
+    // Caso contrario mostrar un gif de fracaso
+    else {
+        // Remplaza con la ruta a tu GIF de fracaso
+        gifURL = 'imagenes/fracaso.gif';
+    }
+
+    // Llama a la utilitaria para cambiar la imagen
+    cambiarImagen('resultadoImagen', gifURL);
 }
+
 document.addEventListener('DOMContentLoaded', () => {
-    const inputs = [
-        document.getElementById('n1'),
-        document.getElementById('n2'),
-        document.getElementById('n3')
-    ].filter(Boolean);
-
-    inputs.forEach(i => i.addEventListener('input', calcularPromedioNotas));
-    
-    calcularPromedioNotas();
+    // Conecta el botón 'btnCalcular' con la función 'calcularPromedioNotas'
+    const btn = document.getElementById('btnCalcular');
+    if (btn) {
+        btn.addEventListener('click', calcularPromedioNotas);
+    }
 });
-
-window.calcularPromedioNotas = calcularPromedioNotas;
