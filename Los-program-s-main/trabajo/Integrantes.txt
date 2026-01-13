@@ -1,0 +1,23 @@
+Nombre del Equipo :     Los Program’s                      
+
+Integrantes 				Numero Integrante	Usuario GitHub	
+	Gabriel Fernando Vinueza Pozo       Numero 1		
+	Josué Jiménez                       Numero 2		JJBeltran1894
+	Juan José Beltrán                   Numero 3
+
+
+Gustos
+Numero 1
+	Animes 
+	Computadoras
+	Programacion 
+	Diseño de Juegos 
+	Peliculas de Ciencia ficción
+
+Numero 3
+	Diseño gráfico
+	Artes Plásticas 
+	Básquet
+	Ciclismo
+	Programación 
+	
